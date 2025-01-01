@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  dotnet:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dotnet9-dev
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    tty: true
+    stdin_open: true
+    networks:
+      - custom_network
+
+
+networks:
+  custom_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.42.12.0/28
+          gateway: 172.42.12.1
+
+
+volumes:
+  sql-data:
